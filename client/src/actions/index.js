@@ -3,26 +3,28 @@ import {FETCH_BOOKS, FETCH_BOOK, DELETE_BOOK, CREATE_BOOK } from './types';
 
 const BOOKS_BASE_URL = '/api/books';
 
-export const fetchBooks = () => async dispatch => {
-    const res = await axios.get(BOOKS_BASE_URL);
+export function fetchBooks () {
+    const request = axios.get(BOOKS_BASE_URL);
 
-    dispatch({ type: FETCH_BOOKS, payload: res.data });
+    return { type: FETCH_BOOKS, payload: request };
 };
 
-export const fetchBook = (id) => async dispatch => {
-    const res = await axios.get(`${BOOKS_BASE_URL}/${id}`);
+export const fetchBook = (id) => {
+    const request = axios.get(`${BOOKS_BASE_URL}/${id}`);
 
-    dispatch({ type: FETCH_BOOK, payload: res.data });
+    return { type: FETCH_BOOK, payload: request };
 };
 
-export const deleteBook = (id) => async dispatch => {
-    const res = await axios.delete(`${BOOKS_BASE_URL}/${id}`);
+export const deleteBook = (id) => {
+    const request = axios.delete(`${BOOKS_BASE_URL}/${id}`);
 
-    dispatch({ type: DELETE_BOOK, payload: res.data });
+    return { type: DELETE_BOOK, payload: request };
 };
 
-export const createBook = (book) => async dispatch => {
-    const res = await axios.post(BOOKS_BASE_URL, book);
+export const createBook = (book, callback) => {
+    const request = axios
+        .post(BOOKS_BASE_URL, book)
+        .then(() => callback());
 
-    dispatch({ type: CREATE_BOOK, payload: res.data });
+    return { type: CREATE_BOOK, payload: request };
 };

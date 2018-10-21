@@ -29,7 +29,9 @@ class BookNew extends Component {
             publicationDate: moment(values.publicationDate).toISOString(),
             genre: genres[values.genre]
         };
-        this.props.createBook(book);
+        this.props.createBook(book, () => {
+            this.props.history.push('/');
+        });
     };
 
     handleChange(date) {
