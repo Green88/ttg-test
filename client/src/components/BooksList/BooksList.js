@@ -37,14 +37,10 @@ class BooksList extends Component {
     render() {
         return (
             <div>
-                {this.props.books ?
-                    <div>
-                        {this.renderBooks()}
-                        <Link to="/books/new" className="btn-floating btn-large waves-effect waves-light red">
-                            <i className="material-icons">add</i>
-                        </Link>
-                    </div>
-                    : null}
+                {this.renderBooks()}
+                <Link to="/books/new" className="btn-floating btn-large waves-effect waves-light red">
+                    <i className="material-icons">add</i>
+                </Link>
             </div>
         );
     }

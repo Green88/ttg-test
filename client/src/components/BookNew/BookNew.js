@@ -3,27 +3,38 @@ import { reduxForm, Field} from 'redux-form';
 import { Link } from 'react-router-dom';
 import map from 'lodash/map';
 import moment from 'moment';
+import { connect } from "react-redux";
+import { createBook } from "../../actions";
 import formInputFields from './formInputFields';
 import BookInputField from './BookInputField';
 import BookSelectField from './BookSelectField';
 import BookDatepicker from './BookDatepicker';
 import formValidation from './formValidation';
+import { genres } from '../../constants';
 import './BooksNew.css';
+
+const dateFormat = 'DD/MM/YYYY';
 
 class BookNew extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            startDate: moment()
+            startDate: moment().format(dateFormat)
         };
         this.handleChange = this.handleChange.bind(this);
     }
-    onBookSubmit(values) {
-        console.log(values);
-    }
+    onBookSubmit = (values) => {
+        const book = {
+            ...values,
+            publicationDate: moment(values.publicationDate).toISOString(),
+            genre: genres[values.genre]
+        };
+        this.props.createBook(book);
+    };
+
     handleChange(date) {
         this.setState({
-            startDate: date
+            startDate: moment(date).format(dateFormat)
         });
     }
     renderInputFields() {
@@ -48,6 +59,7 @@ class BookNew extends Component {
                     name="publicationDate"
                     component={BookDatepicker}
                     label="Publication Date"
+                    dateFormat={dateFormat}
                     selected={this.state.startDate}
                     onChange={this.handleChange}
                 />
@@ -63,7 +75,7 @@ class BookNew extends Component {
     }
     render() {
         return (
-            <form autocomplete="off" className="bookForm" onSubmit={this.props.handleSubmit(this.onBookSubmit)}>
+            <form autoComplete="off" className="bookForm" onSubmit={this.props.handleSubmit(this.onBookSubmit)}>
                 {this.renderForm()}
             </form>
     );
@@ -73,4 +85,4 @@ class BookNew extends Component {
 export default reduxForm({
     form: 'bookNew',
     validate: formValidation
-})(BookNew);
+})(connect(null, { createBook })(BookNew));

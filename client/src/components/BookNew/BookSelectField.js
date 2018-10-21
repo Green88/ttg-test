@@ -1,25 +1,16 @@
 import React from 'react';
 import map from 'lodash/map';
+import { genres } from '../../constants';
 
-const genres = {
-    scifi: 'Science fiction',
-    satire: 'Satire',
-    drama: 'Drama',
-    action: 'Action',
-    romance: 'Romance',
-    mystery: 'Mystery',
-    horror: 'Horror'
-};
-
-export default ({ input, name, label, meta: { error, touched } }) => {
+export default ({ input, label, meta: { error, touched } }) => {
     return (
         <div>
             <label>{label}</label>
             <div>
-                <select name={name} style={{ display: 'block', marginBottom: '20px' }}>
+                <select {...input} style={{ display: 'block', marginBottom: '20px' }}>
                     <option />
                     {map(genres, (value, key) => (
-                        <option value={key}>{value}</option>
+                        <option key={key} value={key}>{value}</option>
                     ))}
                 </select>
             </div>
