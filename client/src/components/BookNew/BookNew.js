@@ -77,9 +77,12 @@ class BookNew extends Component {
     }
     render() {
         return (
-            <form autoComplete="off" className="bookForm" onSubmit={this.props.handleSubmit(this.onBookSubmit)}>
-                {this.renderForm()}
-            </form>
+            <div>
+                <h6>Add a book to inventory</h6>
+                <form autoComplete="off" className="bookForm" onSubmit={this.props.handleSubmit(this.onBookSubmit)}>
+                    {this.renderForm()}
+                </form>
+            </div>
     );
     }
 }

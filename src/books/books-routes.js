@@ -1,6 +1,7 @@
 const Book = require('./books-model');
 const { loadBookByIdValidator, createBookValidator, deleteBookValidator } = require('./books-validator');
 const validateRequest = require('../utils/request-validator');
+const restResponse = require('../utils/rest-response');
 
 module.exports = (app) => {
     app.get('/api/books', loadBooks);
@@ -10,45 +11,66 @@ module.exports = (app) => {
 };
 
 const loadBooks = async (req, res) => {
-    const book = await Book.find({});
-    res.json(book);
+    let book;
+    try {
+        book = await Book.find({});
+    } catch (err) {
+        restResponse.serverError(res, err);
+        return;
+    }
+
+    restResponse.ok(res, book);
 };
 
 const loadBooksById = async (req, res) => {
     const params = req.params;
     if (!validateRequest(params, loadBookByIdValidator)) {
-        res.status(400).json({
-            message: 'Bad request params'
-        });
+        restResponse.badRequest(res, 'Bad request params');
         return;
     }
-    const book = await Book.findOne({_id: req.params.id});
-    res.json(book)
+    let book;
+    try {
+        book = await Book.findOne({_id: req.params.id});
+    } catch (err) {
+        restResponse.serverError(res, err);
+        return;
+    }
+    restResponse.ok(res, book);
 };
 
 const createBook = async (req, res) => {
     const bookParams = req.body;
 
     if (!validateRequest(bookParams, createBookValidator)) {
-        res.status(400).json({
-            message: 'Bad request params'
-        });
+        restResponse.badRequest(res, 'Bad request params');
         return;
     }
     const book = new Book(bookParams);
 
-    const saved = await book.save();
-    res.json(saved);
+    let saved;
+    try {
+        saved = await book.save();
+    } catch (err) {
+        restResponse.serverError(res, err);
+        return;
+    }
+
+    restResponse.ok(res, saved);
 };
 
 const deleteBook = async (req, res) => {
-    const params = req.params;
+    const { params } = req;
     if (!validateRequest(params, deleteBookValidator)) {
-        res.status(400).json({
-            message: 'Bad request params'
-        });
+        restResponse.badRequest(res, 'Bad request params');
         return;
     }
-    const deleted = await Book.findOneAndDelete({ _id: req.params.id });
-    res.json(deleted);
+    let deleted;
+    try {
+        deleted = await Book.findOneAndDelete({ _id: params.id });
+    } catch(err) {
+        restResponse.serverError(res, err);
+        return;
+    }
+
+    restResponse.ok(res, deleted);
 };

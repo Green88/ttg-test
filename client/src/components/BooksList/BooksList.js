@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import map from 'lodash/map';
 import { fetchBooks, deleteBook } from '../../actions';
+import './BooksList.css';
 
 class BooksList extends Component {
     componentDidMount() {
@@ -14,7 +15,7 @@ class BooksList extends Component {
     }
     renderBooks() {
         return map(this.props.books, book => (
-            <div className="row" key={book._id}>
+            <div key={book._id}>
                 <div className="col s12 m6">
                     <div className="card blue-grey darken-1">
                         <div className="card-content white-text">
@@ -37,10 +38,10 @@ class BooksList extends Component {
     render() {
         return (
             <div>
-                {this.renderBooks()}
-                <Link to="/books/new" className="btn-floating btn-large waves-effect waves-light red">
+                <Link to="/books/new" className="btn-floating btn-large waves-effect waves-light red button-add">
                     <i className="material-icons">add</i>
                 </Link>
+                <div className="books-list">{this.renderBooks()}</div>
             </div>
         );
     }
