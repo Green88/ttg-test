@@ -13,7 +13,7 @@ exports.createBookValidator = Joi.object().keys({
     genre: Joi.string().valid(genres),
     publicationDate: Joi.date().iso(),
     price: Joi.number().min(0)
-});
+}).unknown(false);
 
 exports.deleteBookValidator = Joi.object().keys({
     id: Joi.string()

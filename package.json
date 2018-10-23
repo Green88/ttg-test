@@ -21,8 +21,5 @@
     "mongoose": "^5.3.4",
     "nodemon": "^1.18.4",
     "winston": "^3.1.0"
-  },
-  "devDependencies": {
-    "better-npm-run": "^0.1.1"
   }
 }
