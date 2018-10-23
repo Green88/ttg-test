@@ -15,7 +15,7 @@ class BooksList extends Component {
     }
     renderBooks() {
         return map(this.props.books, book => (
-            <div key={book._id}>
+            <div key={book._id} className="book-card">
                 <div className="col s12 m6">
                     <div className="card blue-grey darken-1">
                         <div className="card-content white-text">
@@ -24,7 +24,7 @@ class BooksList extends Component {
                             <p>Price: {`$ ${book.price}`}</p>
                         </div>
                         <div className="card-action">
-                            <Link to={`/books/${book._id}`}>Explore!</Link>
+                            <Link to={`/books/${book._id}`}>More details</Link>
                             <button className="waves-effect waves-light red" onClick={()=>this.handleDeleteBook(book._id)}>
                                 Delete book
                             </button>
@@ -38,10 +38,10 @@ class BooksList extends Component {
     render() {
         return (
             <div>
+                <div className="books-list">{this.renderBooks()}</div>
                 <Link to="/books/new" className="btn-floating btn-large waves-effect waves-light red button-add">
                     <i className="material-icons">add</i>
                 </Link>
-                <div className="books-list">{this.renderBooks()}</div>
             </div>
         );
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import { fetchBook } from '../../actions';
 
 class Book extends Component {
@@ -24,7 +25,7 @@ class Book extends Component {
                         <p>{`Of genre: ${book.genre}`}</p>
                         <p>{`ISBN number: ${book.isbn}`}</p>
                         <p>{`Price: $ ${book.price}`}</p>
-                        <p>{`Published at: ${book.publicationDate}`}</p>
+                        <p>{`Published at: ${moment(book.publicationDate).format('MMMM YYYY')}`}</p>
                     </div>
                     <div className="card-action">
                         <Link to="/">Back to inventory</Link>

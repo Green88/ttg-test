@@ -5,6 +5,10 @@
     flex-wrap: wrap;
 }
 
+.book-card {
+    min-width: 30vw;
+}
+
 .button-add {
     margin: 15px;
 }
